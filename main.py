@@ -1,0 +1,1 @@
+"""Main module that starts the application"""

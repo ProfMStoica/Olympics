@@ -1,0 +1,1 @@
+"""Defines the application class that handles user interaction"""

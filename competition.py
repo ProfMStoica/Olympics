@@ -1,0 +1,1 @@
+"""Defines the Competition class that holds the list of athletes"""
