@@ -7,7 +7,7 @@ class Application:
 
     def __init__(self):
         """Constructor for the Application class"""
-        pass
+        self._competition = Competition()
 
     def run(self):
         pass
