@@ -18,9 +18,7 @@ class Competition:
         """Loads the data file with all the althlete information"""
         #open the file
         athleteFile = None
-        try:
-            athleteFile = open(Competition.ATHLETE_DATA_FILE_NAME, "r")
-
+        with open(Competition.ATHLETE_DATA_FILE_NAME, "r") as athleteFile:
             #read all the lines in the file
             competitionData = athleteFile.readlines()
 
@@ -36,23 +34,10 @@ class Competition:
                     continue
 
                 #create an Athlete object
-                athlete = Athlete()
-
-                #set its properties with the data read from the file
-                athleteData = athleteRecord[:-1].split(",")
-                athlete.setName(athleteData[0])
-                athlete.setGender(athleteData[1])
-                athlete.setAge(int(athleteData[2]))
-                athlete.setTeam(athleteData[3])
-                athlete.setEvent(athleteData[4])
-                athlete.setMedal(athleteData[5])
+                athlete = Athlete(athleteRecord[:-1].split(","))
 
                 #add the athelete the competition list
                 self._athleteList.append(athlete)
-        finally:
-            #close file
-            if athleteFile != None:
-                athleteFile.close() 
 
 
     def save(self):

@@ -2,13 +2,22 @@
 
 class Athlete:
     """Defines the athlete properties and functionality"""
-    def __init__(self):
-        self._name = ""
-        self._gender = ""
-        self._age = 0
-        self._team = None
-        self._event = None
-        self._medal = None
+    def __init__(self, initData = None):
+        if initData == None:
+            self._name = ""
+            self._gender = ""
+            self._age = 0
+            self._team = None
+            self._event = None
+            self._medal = None
+        else:
+            #set its properties with the data read from the file
+            self._name = initData[0]
+            self._gender = initData[1]
+            self._age = int(initData[2])
+            self._team = initData[3]
+            self._event = initData[4]
+            self._medal = initData[5]            
 
     def getName(self):
         return self._name
