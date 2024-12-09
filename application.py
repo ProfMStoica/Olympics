@@ -15,3 +15,6 @@ class Application:
 
         #ask the competiton to print the roster of athletes
         self._competition.printCompetitors()
+
+        #write out the medalists
+        self._competition.saveMedalists()

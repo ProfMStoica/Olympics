@@ -45,6 +45,9 @@ class Athlete:
     
     def setMedal(self, medal):
         self._medal = medal
+
+    def wonMedal(self):
+        return self._medal != "NA"
     
     
     

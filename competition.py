@@ -7,6 +7,9 @@ class Competition:
     #constant that defines the name of the file
     ATHLETE_DATA_FILE_NAME = "data/olympics.csv"
 
+    #constant that defines the name of the medalists file
+    MEDALISTS_DATA_FILE_NAME = "data/medalists.csv"
+
     def __init__(self):
         #1 to many HAS-A relationship between Competition and Athelete
         self._athleteList = []
@@ -14,53 +17,75 @@ class Competition:
     def load(self):
         """Loads the data file with all the althlete information"""
         #open the file
-        athleteFile = open(Competition.ATHLETE_DATA_FILE_NAME, "r")
+        athleteFile = None
+        try:
+            athleteFile = open(Competition.ATHLETE_DATA_FILE_NAME, "r")
 
-        #read all the lines in the file
-        competitionData = athleteFile.readlines()
+            #read all the lines in the file
+            competitionData = athleteFile.readlines()
 
-        #go through each of the lines in the file
-        headerRead = False
-        for athleteRecord in competitionData:
-            #skip the first line because it is the header of the file
-            if not headerRead:
-                #mark the header as read
-                headerRead = True
+            #go through each of the lines in the file
+            headerRead = False
+            for athleteRecord in competitionData:
+                #skip the first line because it is the header of the file
+                if not headerRead:
+                    #mark the header as read
+                    headerRead = True
 
-                #skip the rest of this iteration
-                continue
+                    #skip the rest of this iteration
+                    continue
 
-            #create an Athlete object
-            athlete = Athlete()
+                #create an Athlete object
+                athlete = Athlete()
 
-            #set its properties with the data read from the file
-            athleteData = athleteRecord[:-1].split(",")
-            athlete.setName(athleteData[0])
-            athlete.setGender(athleteData[1])
-            athlete.setAge(athleteData[2])
-            athlete.setTeam(athleteData[3])
-            athlete.setEvent(athleteData[4])
-            athlete.setMedal(athleteData[5])
+                #set its properties with the data read from the file
+                athleteData = athleteRecord[:-1].split(",")
+                athlete.setName(athleteData[0])
+                athlete.setGender(athleteData[1])
+                athlete.setAge(int(athleteData[2]))
+                athlete.setTeam(athleteData[3])
+                athlete.setEvent(athleteData[4])
+                athlete.setMedal(athleteData[5])
 
-            #add the athelete the competition list
-            self._athleteList.append(athlete)
-
-        #close file
-        athleteFile.close() 
+                #add the athelete the competition list
+                self._athleteList.append(athlete)
+        finally:
+            #close file
+            if athleteFile != None:
+                athleteFile.close() 
 
 
     def save(self):
-        """Saves the atlehte information back to the data file"""
+        """Saves the athlete information back to the data file"""
         pass
+
+    def saveMedalists(self):
+        """Saves all the athlets that have a medal"""
+        with open(Competition.MEDALISTS_DATA_FILE_NAME, "w") as medalistsFile:
+            #write the CSV header
+            medalistsFile.write("Name,Gender,Age,Team,Event,Medal\n")
+
+            #repeat for each athlete in the competition
+            for athlete in self._athleteList:
+                #check whether the athlete has a medal
+                if athlete.wonMedal():
+                    #write the athlete information in the medalists file
+                    athleteRecord = f"{athlete.getName()},{athlete.getGender()},{athlete.getAge()},{athlete.getTeam()},{athlete.getEvent()},{athlete.getMedal()}\n"
+                    
+                    #write the record into the file
+                    medalistsFile.write(athleteRecord)
+
+        #NOTE: the file does not need to be closed because we used a context manager with the "with"
+
 
     def printCompetitors(self):
         for athlete in self._athleteList:
             print()
-            print(f"Name: {athlete.getName()}\n")
-            print(f"Gender: {athlete.getGender()}\n")
-            print(f"Gender: {athlete.getGender()}\n")
-            print(f"Age: {athlete.getAge()}\n")
-            print(f"Team: {athlete.getTeam()}\n")
-            print(f"Event: {athlete.getEvent()}\n")
-            print(f"Medal: {athlete.getMedal()}\n")
+            print(f"Name: {athlete.getName()}")
+            print(f"Gender: {athlete.getGender()}")
+            print(f"Gender: {athlete.getGender()}")
+            print(f"Age: {athlete.getAge()}")
+            print(f"Team: {athlete.getTeam()}")
+            print(f"Event: {athlete.getEvent()}")
+            print(f"Medal: {athlete.getMedal()}")
             
