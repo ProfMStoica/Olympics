@@ -12,12 +12,12 @@ class Athlete:
             self._medal = None
         else:
             #set its properties with the data read from the file
-            self._name = initData[0]
-            self._gender = initData[1]
-            self._age = int(initData[2])
-            self._team = initData[3]
-            self._event = initData[4]
-            self._medal = initData[5]            
+            self._name = initData["Name"]
+            self._gender = initData["Gender"]
+            self._age = int(initData["Age"])
+            self._team = initData["Team"]
+            self._event = initData["Event"]
+            self._medal = initData["Medal"]            
 
     def getName(self):
         return self._name
@@ -57,6 +57,17 @@ class Athlete:
 
     def wonMedal(self):
         return self._medal != "NA"
+    
+    def toDict(self):
+        return {
+            "Name" : self._name,
+            "Gender" : self._gender,
+            "Age" : self._age,
+            "Team" : self._team,
+            "Event" : self._event,
+            "Medal" : self._medal
+        }                   
+                    
     
     
     
