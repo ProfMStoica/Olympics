@@ -10,4 +10,8 @@ class Application:
         self._competition = Competition()
 
     def run(self):
-        pass
+        #ask the competition to load its data
+        self._competition.load()
+
+        #ask the competiton to print the roster of athletes
+        self._competition.printCompetitors()

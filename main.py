@@ -4,3 +4,6 @@ from application import Application
 
 #dependency/USES relationship between main and Application
 app = Application()
+
+#run the application
+app.run()
